@@ -2,8 +2,6 @@
 	import { getContext, onMount } from 'svelte';
 	const i18n = getContext('i18n');
 
-	import { WEBUI_BASE_URL } from '$lib/constants';
-
 	import Marquee from './common/Marquee.svelte';
 	import SlideShow from './common/SlideShow.svelte';
 	import ArrowRightCircle from './icons/ArrowRightCircle.svelte';
@@ -11,28 +9,18 @@
 	export let show = true;
 	export let getStartedHandler = () => {};
 
-	// URLs de tus logos en GitHub
+	// URLs de tus logos en GitHub (PNG)
 	const LOGO_LIGHT = "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png";
 	const LOGO_DARK = "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/21f6b24619eb102117ec755e3738f9f452b4661c/Favicon2%20(1).png";
 
-	function setLogoImage() {
-		const logo = document.getElementById('logo');
-
-		if (logo) {
-			const isDarkMode = document.documentElement.classList.contains('dark');
-			// Cambiamos el src dependiendo del modo detectado
-			logo.src = isDarkMode ? LOGO_DARK : LOGO_LIGHT;
-			logo.style.filter = ''; // Limpiamos cualquier filtro de inversión previo
-		}
-	}
-
-	$: if (show) {
-		// Ejecutamos la lógica cada vez que se muestra o cambia el estado
-		setTimeout(setLogoImage, 0);
-	}
+	// Establecemos el logo de modo claro como base inicial
+	let activeLogo = LOGO_LIGHT;
 
 	onMount(() => {
-		setLogoImage();
+		// Verificación inmediata al montar el componente
+		if (document.documentElement.classList.contains('dark')) {
+			activeLogo = LOGO_DARK;
+		}
 	});
 </script>
 
@@ -44,7 +32,7 @@
 					<img
 						id="logo"
 						crossorigin="anonymous"
-						src={LOGO_LIGHT}
+						src={activeLogo}
 						style="width: 300px !important; height: auto !important; max-width: none !important;"
 						class="rounded-full object-contain"
 						alt="GoDoWorks logo"
