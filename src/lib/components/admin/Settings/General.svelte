@@ -190,7 +190,7 @@
 									{$i18n.t('Help')}
 								</div>
 								<div class=" text-xs text-gray-500">
-									{$i18n.t('Discover how to use Open WebUI and seek support from the community.')}
+									{$i18n.t('Descubre como usar GIS.')}
 								</div>
 							</div>
 
@@ -205,24 +205,17 @@
 
 						<div class="mt-1">
 							<div class="flex space-x-1">
-								<a href="https://discord.gg/5rJgQTnV4s" target="_blank">
+								<a href="https://x.com/GdwStatus" target="_blank">
 									<img
-										alt="Discord"
-										src="https://img.shields.io/badge/Discord-Open_WebUI-blue?logo=discord&logoColor=white"
-									/>
-								</a>
-
-								<a href="https://twitter.com/OpenWebUI" target="_blank">
-									<img
-										alt="X (formerly Twitter) Follow"
-										src="https://img.shields.io/twitter/follow/OpenWebUI"
+										alt="X (formalmente Twitter) Siguenos"
+										src="https://img.shields.io/twitter/follow/GoDoWorks"
 									/>
 								</a>
 
 								<a href="https://github.com/GodoworksGIT" target="_blank">
 									<img
 										alt="Github Repo"
-										src="?style=social&label=Star us on Github"
+										src="https://img.shields.io/github/stars/open-webui/open-webui?style=social&label=GoDoWorks en Github"
 									/>
 								</a>
 							</div>

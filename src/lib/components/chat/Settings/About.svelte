@@ -62,11 +62,11 @@
 
 						{#if $config?.features?.enable_version_update_check}
 							<a
-								href="https://github.com/GodoworksGIT"
+								href="https://github.com/open-webui/open-webui/releases/tag/v{version.latest}"
 								target="_blank"
 							>
 								{updateAvailable === null
-									? $i18n.t('Checking for updates...')
+									? $i18n.t('Buscando actualizaciones...')
 									: updateAvailable
 										? `(v${version.latest} ${$i18n.t('available!')})`
 										: $i18n.t('(latest)')}
@@ -80,7 +80,7 @@
 							showChangelog.set(true);
 						}}
 					>
-						<div>{$i18n.t("See what's new")}</div>
+						<div>{$i18n.t("Ver Novedades")}</div>
 					</button>
 				</div>
 
@@ -114,7 +114,7 @@
 
 		{#if $config?.license_metadata}
 			<div class="mb-2 text-xs">
-				{#if !$WEBUI_NAME.includes('Open WebUI')}
+				{#if !$WEBUI_NAME.includes('G.I System')}
 					<span class=" text-gray-500 dark:text-gray-300 font-medium">{$WEBUI_NAME}</span> -
 				{/if}
 
@@ -124,36 +124,36 @@
 		{:else}
 			<div class="flex space-x-1">
 
-				<a href="https://twitter.com/OpenWebUI" target="_blank">
+				<a href="https://x.com/GdwStatus" target="_blank">
 					<img
 						alt="X (formerly Twitter) Follow"
-						src="https://x.com/GdwStatus"
+						src="https://img.shields.io/twitter/follow/OpenWebUI"
 					/>
 				</a>
 
 				<a href="https://github.com/GodoworksGIT" target="_blank">
 					<img
 						alt="Github Repo"
-						src="https://github.com/GodoworksGIT?style=social&label=Star us on Github"
+						src="https://img.shields.io/github/stars/open-webui/open-webui?style=social&label=Star us on Github"
 					/>
 				</a>
 			</div>
 		{/if}
 
 		<div class="mt-2 text-xs text-gray-400 dark:text-gray-500">
-			Emoji graphics provided by
-			<a href="https://github.com/jdecked/twemoji" target="_blank">Twemoji</a>, licensed under
+			Emojis graficos proporcionados por
+			<a href="https://github.com/jdecked/twemoji" target="_blank">Twemoji</a>, licencia bajo
 			<a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC-BY 4.0</a>.
 		</div>
 
 		<div>
 			<pre
 				class="text-xs text-gray-400 dark:text-gray-500">Copyright (c) {new Date().getFullYear()} <a
-					href="https://openwebui.com"
+					href="https://godoworks.com"
 					target="_blank"
-					class="underline">Open WebUI Inc.</a
+					class="underline">GoDoWorks Intelligent Systems</a
 				> <a href="https://github.com/open-webui/open-webui/blob/main/LICENSE" target="_blank"
-					>All rights reserved.</a
+					>Derechos Reservados.</a
 				>
 </pre>
 		</div>
@@ -162,8 +162,8 @@
 			{$i18n.t('Created by')}
 			<a
 				class=" text-gray-500 dark:text-gray-300 font-medium"
-				href="https://github.com/tjbck"
-				target="_blank">Timothy J. Baek</a
+				href="https://github.com/agustin-gdw"
+				target="_blank">Agustin A. Sconamiglio</a
 			>
 		</div>
 	</div>
