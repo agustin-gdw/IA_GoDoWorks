@@ -15,7 +15,6 @@ export default defineConfig({
 		})
 	],
 	server: {
-		// host: true permite que el sistema se vea en tu red local (192.168.5.46)
 		host: true,
 		port: 5173,
 		strictPort: true,

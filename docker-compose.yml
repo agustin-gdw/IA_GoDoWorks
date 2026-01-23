@@ -8,5 +8,5 @@ services:
       - WEBUI_SECRET_KEY=tu_clave_secreta_aqui
       - CORS_ALLOW_ORIGIN=http://192.168.5.46:5173
     volumes:
-      - ./data:/app/data # Guarda la base de datos y chats aquí
+      - ./data:/app/data # Guarda la base de datos y chats aquï¿½
     restart: always
