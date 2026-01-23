@@ -12,7 +12,7 @@
 
 <svelte:head>
 	<title>
-		{$i18n.t('Playground')} • {$WEBUI_NAME}
+		{$i18n.t('Playground')} • {"GoDoWorks Intelligent Systems"}
 	</title>
 </svelte:head>
 

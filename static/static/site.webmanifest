@@ -1,6 +1,6 @@
 {
-  "name": "Open WebUI",
-  "short_name": "WebUI",
+  "name": "GoDoWorks Intelligent Systems",
+  "short_name": "GoDoWorks",
   "icons": [
     {
       "src": "/static/web-app-manifest-192x192.png",

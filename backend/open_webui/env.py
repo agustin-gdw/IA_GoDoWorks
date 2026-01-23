@@ -87,11 +87,11 @@ if "cuda_error" in locals():
 
 SRC_LOG_LEVELS = {}  # Legacy variable, do not remove
 
-WEBUI_NAME = os.environ.get("WEBUI_NAME", "Open WebUI")
-if WEBUI_NAME != "Open WebUI":
-    WEBUI_NAME += " (Open WebUI)"
+WEBUI_NAME = os.environ.get("WEBUI_NAME", "GoDoWorks Intelligent Systems")
+if WEBUI_NAME != "GoDoWorks Intelligent Systems":
+    WEBUI_NAME += " (GoDoWorks Intelligent Systems)"
 
-WEBUI_FAVICON_URL = "https://openwebui.com/favicon.png"
+WEBUI_FAVICON_URL = "https://github.com/agustin-gdw/IA_GoDoWorks/raw/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
 
 TRUSTED_SIGNATURE_KEY = os.environ.get("TRUSTED_SIGNATURE_KEY", "")
 
