@@ -42,10 +42,10 @@
 	let codeEditor;
 	let boilerplate = `"""
 title: Example Filter
-author: open-webui
-author_url: https://github.com/open-webui
-funding_url: https://github.com/open-webui
-version: 0.1
+author: GoDoWorks
+author_url: https://github.com/GodoworksGIT
+funding_url: https://github.com/GodoworksGIT
+version: 0.2
 """
 
 from pydantic import BaseModel, Field
