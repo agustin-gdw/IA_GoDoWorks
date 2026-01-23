@@ -25,7 +25,7 @@ class TestModels(AbstractPostgresTest):
                     "base_model_id": "base-model-id",
                     "name": "Hello World",
                     "meta": {
-                        "profile_image_url": "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png",
+                        "profile_image_url": "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png",
                         "description": "description",
                         "capabilities": None,
                         "model_config": {},

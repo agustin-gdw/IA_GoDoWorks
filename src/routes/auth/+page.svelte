@@ -241,7 +241,7 @@
 									<img
 										id="logo"
 										crossorigin="anonymous"
-										src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
+										src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
 										class="size-24 rounded-full"
 										alt=""
 									/>
@@ -587,7 +587,7 @@
 						<img
 							id="logo"
 							crossorigin="anonymous"
-							src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
+							src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
 							class=" w-6 rounded-full"
 							alt=""
 						/>

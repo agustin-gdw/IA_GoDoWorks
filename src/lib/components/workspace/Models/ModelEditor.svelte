@@ -71,7 +71,7 @@
 		base_model_id: null,
 		name: '',
 		meta: {
-			profile_image_url: `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png`,
+			profile_image_url: `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`,
 			description: '',
 			suggestion_prompts: null,
 			tags: []
@@ -445,7 +445,7 @@
 							<div class="self-center">
 								<button
 									class="rounded-xl flex shrink-0 items-center {info.meta.profile_image_url !==
-									`https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png`
+									`https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`
 										? 'bg-transparent'
 										: 'bg-white'} shadow-xl group relative"
 									type="button"
@@ -461,7 +461,7 @@
 										/>
 									{:else}
 										<img
-											src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
+											src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
 											alt="model profile"
 											class=" rounded-xl size-60 object-cover shrink-0"
 										/>
@@ -497,7 +497,7 @@
 									<button
 										class="px-2 py-1 text-gray-500 rounded-lg text-xs"
 										on:click={() => {
-											info.meta.profile_image_url = `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png`;
+											info.meta.profile_image_url = `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`;
 										}}
 										type="button"
 									>

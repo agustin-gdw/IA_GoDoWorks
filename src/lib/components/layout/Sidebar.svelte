@@ -605,8 +605,6 @@
 	}}
 />
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-
 {#if $showSidebar}
 	<div
 		class=" {$isApp
@@ -670,8 +668,17 @@
 					>
 						<div class=" self-center flex items-center justify-center size-9">
 							<img
-								src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
-								class="sidebar-new-chat-icon size-6 rounded-full group-hover:hidden"
+								crossorigin="anonymous"
+								src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
+								class="sidebar-new-chat-icon rounded-full group-hover:hidden object-contain block dark:hidden"
+								style="width: 47px !important; height: auto !important; max-width: none !important;"
+								alt=""
+							/>
+							<img
+								crossorigin="anonymous"
+								src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/21f6b24619eb102117ec755e3738f9f452b4661c/Favicon2%20(1).png"
+								class="sidebar-new-chat-icon rounded-full group-hover:hidden object-contain hidden dark:block"
+								style="width: 47px !important; height: auto !important; max-width: none !important;"
 								alt=""
 							/>
 
@@ -836,9 +843,6 @@
 	</div>
 {/if}
 
-<!-- {$i18n.t('New Folder')} -->
-<!-- {$i18n.t('Pinned')} -->
-
 {#if $showSidebar}
 	<div
 		bind:this={navElement}
@@ -861,15 +865,24 @@
 				class="sidebar px-[0.5625rem] pt-2 pb-1.5 flex justify-between space-x-1 text-gray-600 dark:text-gray-400 sticky top-0 z-10 -mb-3"
 			>
 				<a
-					class="flex items-center rounded-xl size-8.5 h-full justify-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition no-drag-region"
+					class="flex items-center rounded-xl h-full justify-center hover:bg-gray-100/50 dark:hover:bg-gray-850/50 transition no-drag-region"
+					style="width: 1310px; min-width: 130px;" 
 					href="/"
 					draggable="false"
 					on:click={newChatHandler}
 				>
 					<img
 						crossorigin="anonymous"
-						src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
-						class="sidebar-new-chat-icon size-6 rounded-full"
+						src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
+						class="sidebar-new-chat-icon rounded-full object-contain block dark:hidden"
+						style="width: 200px !important; height: auto !important; max-width: none !important; margin-left: 15px !important;"
+						alt=""
+					/>
+					<img
+						crossorigin="anonymous"
+						src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/21f6b24619eb102117ec755e3738f9f452b4661c/Favicon2%20(1).png"
+						class="sidebar-new-chat-icon rounded-full object-contain hidden dark:block"
+						style="width: 200px !important; height: auto !important; max-width: none !important; margin-left: 15px !important;"
 						alt=""
 					/>
 				</a>
@@ -879,7 +892,7 @@
 						id="sidebar-webui-name"
 						class=" self-center font-medium text-gray-850 dark:text-white font-primary"
 					>
-						{"GoDoWorks Intelligent Systems"}
+						{""}
 					</div>
 				</a>
 				<Tooltip
@@ -1282,25 +1295,7 @@
 												: 'pt-5'} pb-1.5"
 										>
 											{$i18n.t(chat.time_range)}
-											<!-- localisation keys for time_range to be recognized from the i18next parser (so they don't get automatically removed):
-							{$i18n.t('Today')}
-							{$i18n.t('Yesterday')}
-							{$i18n.t('Previous 7 days')}
-							{$i18n.t('Previous 30 days')}
-							{$i18n.t('January')}
-							{$i18n.t('February')}
-							{$i18n.t('March')}
-							{$i18n.t('April')}
-							{$i18n.t('May')}
-							{$i18n.t('June')}
-							{$i18n.t('July')}
-							{$i18n.t('August')}
-							{$i18n.t('September')}
-							{$i18n.t('October')}
-							{$i18n.t('November')}
-							{$i18n.t('December')}
-							-->
-										</div>
+											</div>
 									{/if}
 
 									<ChatItem

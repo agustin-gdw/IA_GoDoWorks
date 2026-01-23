@@ -98,6 +98,58 @@
 
 	const BREAKPOINT = 768;
 
+    // --- VARIABLES AUDIO ---
+    let welcomeAudio = null; 
+    let isWelcomeAudioScheduled = false; // <--- SEMÁFORO PARA EVITAR DOBLE PLAY
+
+    // --- LÓGICA REACTIVA ---
+    $: if ($user && loaded && welcomeAudio) {
+        if (typeof localStorage !== 'undefined') {
+            const currentToken = localStorage.getItem('token');
+            // Usamos una firma del token para identificar la sesión actual
+            const tokenSignature = currentToken ? currentToken.slice(-15) : 'unknown';
+            const welcomeKey = `welcome_sound_played_${tokenSignature}`;
+
+            const alreadyPlayedForThisToken = localStorage.getItem(welcomeKey);
+
+            // Verificamos si ya sonó Y si ya hemos programado el sonido en este ciclo de render
+            if (!alreadyPlayedForThisToken && currentToken && !isWelcomeAudioScheduled) {
+                
+                // BLOQUEAMOS INMEDIATAMENTE para que si Svelte corre esto de nuevo, no entre aquí.
+                isWelcomeAudioScheduled = true; 
+
+                setTimeout(() => {
+                    try {
+                        welcomeAudio.currentTime = 0; 
+                        const playPromise = welcomeAudio.play();
+                        
+                        if (playPromise !== undefined) {
+                            playPromise.then(_ => {
+                                console.log("Audio reproducido correctamente.");
+                                localStorage.setItem(welcomeKey, 'true');
+                            })
+                            .catch(error => {
+                                console.log("Autoplay bloqueado. Esperando clic...");
+                                const playOnClick = () => {
+                                    welcomeAudio.play();
+                                    localStorage.setItem(welcomeKey, 'true'); 
+                                    document.removeEventListener('click', playOnClick);
+                                    document.removeEventListener('touchstart', playOnClick);
+                                    document.removeEventListener('keydown', playOnClick);
+                                };
+                                document.addEventListener('click', playOnClick);
+                                document.addEventListener('touchstart', playOnClick);
+                                document.addEventListener('keydown', playOnClick);
+                            });
+                        }
+                    } catch (err) {
+                        console.error("Error audio:", err);
+                    }
+                }, 2000); 
+            }
+        }
+    }
+
 	const setupSocket = async (enableWebsocket) => {
 		const _socket = io(`${WEBUI_BASE_URL}` || undefined, {
 			reconnection: true,
@@ -362,7 +414,7 @@
 						if ($settings?.notificationEnabled ?? false) {
 							new Notification(`${title} • GoDoWorks Intelligent Systems`, {
 								body: content,
-								icon: `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png`
+								icon: `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`
 							});
 						}
 					}
@@ -620,6 +672,13 @@
 	};
 
 	onMount(async () => {
+        // --- PRECARGA (Solo se descarga, NO se reproduce) ---
+        welcomeAudio = new Audio(`/welcome.mp3?t=${Date.now()}`);
+        welcomeAudio.preload = 'auto'; 
+        welcomeAudio.volume = 0.5;
+        welcomeAudio.load(); 
+        // ---------------------------------------------------
+
 		window.addEventListener('message', windowMessageEventHandler);
 
 		let touchstartY = 0;
@@ -853,7 +912,7 @@
 
 <svelte:head>
 	<title>{"GoDoWorks Intelligent Systems"}</title>
-	<link crossorigin="anonymous" rel="icon" href="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png" />
+	<link crossorigin="anonymous" rel="icon" href="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png" />
 
 	<meta name="apple-mobile-web-app-title" content={"GoDoWorks Intelligent Systems"} />
 	<meta name="description" content={"GoDoWorks Intelligent Systems"} />

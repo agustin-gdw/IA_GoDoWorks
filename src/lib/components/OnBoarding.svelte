@@ -11,31 +11,29 @@
 	export let show = true;
 	export let getStartedHandler = () => {};
 
+	// URLs de tus logos en GitHub
+	const LOGO_LIGHT = "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png";
+	const LOGO_DARK = "https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/21f6b24619eb102117ec755e3738f9f452b4661c/Favicon2%20(1).png";
+
 	function setLogoImage() {
 		const logo = document.getElementById('logo');
 
 		if (logo) {
 			const isDarkMode = document.documentElement.classList.contains('dark');
-
-			if (isDarkMode) {
-				const darkImage = new Image();
-				darkImage.src = `${WEBUI_BASE_URL}/static/favicon-dark.png`;
-
-				darkImage.onload = () => {
-					logo.src = `${WEBUI_BASE_URL}/static/favicon-dark.png`;
-					logo.style.filter = ''; // Ensure no inversion is applied if splash-dark.png exists
-				};
-
-				darkImage.onerror = () => {
-					logo.style.filter = 'invert(1)'; // Invert image if splash-dark.png is missing
-				};
-			}
+			// Cambiamos el src dependiendo del modo detectado
+			logo.src = isDarkMode ? LOGO_DARK : LOGO_LIGHT;
+			logo.style.filter = ''; // Limpiamos cualquier filtro de inversión previo
 		}
 	}
 
 	$: if (show) {
-		setLogoImage();
+		// Ejecutamos la lógica cada vez que se muestra o cambia el estado
+		setTimeout(setLogoImage, 0);
 	}
+
+	onMount(() => {
+		setLogoImage();
+	});
 </script>
 
 {#if show}
@@ -46,9 +44,10 @@
 					<img
 						id="logo"
 						crossorigin="anonymous"
-						src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/368d8bfa46b4b3d6999badea023948e4b51bd74e/Favicon1.png"
-						class=" w-6 rounded-full"
-						alt="logo"
+						src={LOGO_LIGHT}
+						style="width: 300px !important; height: auto !important; max-width: none !important;"
+						class="rounded-full object-contain"
+						alt="GoDoWorks logo"
 					/>
 				</div>
 			</div>

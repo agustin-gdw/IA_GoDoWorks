@@ -34,7 +34,8 @@
 		temporaryChatEnabled,
 		toolServers,
 		showSearch,
-		showSidebar
+		showSidebar,
+		theme // Importamos el store del tema para asegurar reactividad
 	} from '$lib/stores';
 
 	import Sidebar from '$lib/components/layout/Sidebar.svelte';
@@ -64,22 +65,14 @@
 
 	const checkLocalDBChats = async () => {
 		try {
-			// Check if IndexedDB exists
 			DB = await openDB('Chats', 1);
-
-			if (!DB) {
-				return;
-			}
-
+			if (!DB) return;
 			const chats = await DB.getAllFromIndex('chats', 'timestamp');
 			localDBChats = chats.map((item, idx) => chats[chats.length - 1 - idx]);
-
 			if (localDBChats.length === 0) {
 				await deleteDB('Chats');
 			}
-		} catch (error) {
-			// IndexedDB Not Found
-		}
+		} catch (error) {}
 	};
 
 	const setUserSettings = async (cb: () => Promise<void>) => {
@@ -92,7 +85,6 @@
 			try {
 				userSettings = JSON.parse(localStorage.getItem('settings') ?? '{}');
 			} catch (e: unknown) {
-				console.error('Failed to parse settings from localStorage', e);
 				userSettings = {};
 			}
 		}
@@ -100,10 +92,7 @@
 		if (userSettings?.ui) {
 			settings.set(userSettings.ui);
 		}
-
-		if (cb) {
-			await cb();
-		}
+		if (cb) await cb();
 	};
 
 	const setModels = async () => {
@@ -119,11 +108,7 @@
 		let toolServersData = await getToolServersData($settings?.toolServers ?? []);
 		toolServersData = toolServersData.filter((data) => {
 			if (!data || data.error) {
-				toast.error(
-					$i18n.t(`Failed to connect to {{URL}} OpenAPI tool server`, {
-						URL: data?.url
-					})
-				);
+				toast.error($i18n.t(`Failed to connect to {{URL}} OpenAPI tool server`, { URL: data?.url }));
 				return false;
 			}
 			return true;
@@ -146,9 +131,7 @@
 			await goto('/auth');
 			return;
 		}
-		if (!['user', 'admin'].includes($user?.role)) {
-			return;
-		}
+		if (!['user', 'admin'].includes($user?.role)) return;
 
 		clearChatInputStorage();
 		await Promise.all([
@@ -160,78 +143,58 @@
 			})
 		]);
 
-		// Helper function to check if the pressed keys match the shortcut definition
 		const isShortcutMatch = (event: KeyboardEvent, shortcut): boolean => {
 			const keys = shortcut?.keys || [];
-
 			const normalized = keys.map((k) => k.toLowerCase());
 			const needCtrl = normalized.includes('ctrl') || normalized.includes('mod');
 			const needShift = normalized.includes('shift');
 			const needAlt = normalized.includes('alt');
-
 			const mainKeys = normalized.filter((k) => !['ctrl', 'shift', 'alt', 'mod'].includes(k));
-
-			// Get the main key pressed
 			const keyPressed = event.key.toLowerCase();
 
-			// Check modifiers
 			if (needShift && !event.shiftKey) return false;
-
 			if (needCtrl && !(event.ctrlKey || event.metaKey)) return false;
 			if (!needCtrl && (event.ctrlKey || event.metaKey)) return false;
 			if (needAlt && !event.altKey) return false;
 			if (!needAlt && event.altKey) return false;
-
 			if (mainKeys.length && !mainKeys.includes(keyPressed)) return false;
-
 			return true;
 		};
 
 		const setupKeyboardShortcuts = () => {
 			document.addEventListener('keydown', async (event) => {
 				if (isShortcutMatch(event, shortcuts[Shortcut.SEARCH])) {
-					console.log('Shortcut triggered: SEARCH');
 					event.preventDefault();
 					showSearch.set(!$showSearch);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.NEW_CHAT])) {
-					console.log('Shortcut triggered: NEW_CHAT');
 					event.preventDefault();
 					document.getElementById('sidebar-new-chat-button')?.click();
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.FOCUS_INPUT])) {
-					console.log('Shortcut triggered: FOCUS_INPUT');
 					event.preventDefault();
 					document.getElementById('chat-input')?.focus();
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.COPY_LAST_CODE_BLOCK])) {
-					console.log('Shortcut triggered: COPY_LAST_CODE_BLOCK');
 					event.preventDefault();
 					[...document.getElementsByClassName('copy-code-button')]?.at(-1)?.click();
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.COPY_LAST_RESPONSE])) {
-					console.log('Shortcut triggered: COPY_LAST_RESPONSE');
 					event.preventDefault();
 					[...document.getElementsByClassName('copy-response-button')]?.at(-1)?.click();
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.TOGGLE_SIDEBAR])) {
-					console.log('Shortcut triggered: TOGGLE_SIDEBAR');
 					event.preventDefault();
 					showSidebar.set(!$showSidebar);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.DELETE_CHAT])) {
-					console.log('Shortcut triggered: DELETE_CHAT');
 					event.preventDefault();
 					document.getElementById('delete-chat-button')?.click();
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.OPEN_SETTINGS])) {
-					console.log('Shortcut triggered: OPEN_SETTINGS');
 					event.preventDefault();
 					showSettings.set(!$showSettings);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.SHOW_SHORTCUTS])) {
-					console.log('Shortcut triggered: SHOW_SHORTCUTS');
 					event.preventDefault();
 					showShortcuts.set(!$showShortcuts);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.CLOSE_MODAL])) {
-					console.log('Shortcut triggered: CLOSE_MODAL');
 					event.preventDefault();
 					showSettings.set(false);
 					showShortcuts.set(false);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.NEW_TEMPORARY_CHAT])) {
-					console.log('Shortcut triggered: NEW_TEMPORARY_CHAT');
 					event.preventDefault();
 					if ($user?.role !== 'admin' && $user?.permissions?.chat?.temporary_enforced) {
 						temporaryChatEnabled.set(true);
@@ -243,14 +206,12 @@
 						document.getElementById('new-chat-button')?.click();
 					}, 0);
 				} else if (isShortcutMatch(event, shortcuts[Shortcut.GENERATE_MESSAGE_PAIR])) {
-					console.log('Shortcut triggered: GENERATE_MESSAGE_PAIR');
 					event.preventDefault();
 					document.getElementById('generate-message-pair-button')?.click();
 				} else if (
 					isShortcutMatch(event, shortcuts[Shortcut.REGENERATE_RESPONSE]) &&
 					document.activeElement?.id === 'chat-input'
 				) {
-					console.log('Shortcut triggered: REGENERATE_RESPONSE');
 					event.preventDefault();
 					[...document.getElementsByClassName('regenerate-response-button')]?.at(-1)?.click();
 				}
@@ -263,40 +224,24 @@
 		}
 
 		if ($user?.role === 'admin' || ($user?.permissions?.chat?.temporary ?? true)) {
-			if ($page.url.searchParams.get('temporary-chat') === 'true') {
-				temporaryChatEnabled.set(true);
-			}
-
-			if ($user?.role !== 'admin' && $user?.permissions?.chat?.temporary_enforced) {
-				temporaryChatEnabled.set(true);
-			}
+			if ($page.url.searchParams.get('temporary-chat') === 'true') temporaryChatEnabled.set(true);
+			if ($user?.role !== 'admin' && $user?.permissions?.chat?.temporary_enforced) temporaryChatEnabled.set(true);
 		}
 
-		// Check for version updates
 		if ($user?.role === 'admin' && $config?.features?.enable_version_update_check) {
-			// Check if the user has dismissed the update toast in the last 24 hours
 			if (localStorage.dismissedUpdateToast) {
 				const dismissedUpdateToast = new Date(Number(localStorage.dismissedUpdateToast));
 				const now = new Date();
-
-				if (now - dismissedUpdateToast > 24 * 60 * 60 * 1000) {
-					checkForVersionUpdates();
-				}
-			} else {
-				checkForVersionUpdates();
-			}
+				if (now - dismissedUpdateToast > 24 * 60 * 60 * 1000) checkForVersionUpdates();
+			} else checkForVersionUpdates();
 		}
 		await tick();
-
 		loaded = true;
 	});
 
 	const checkForVersionUpdates = async () => {
-		version = await getVersionUpdates(localStorage.token).catch((error) => {
-			return {
-				current: WEBUI_VERSION,
-				latest: WEBUI_VERSION
-			};
+		version = await getVersionUpdates(localStorage.token).catch(() => {
+			return { current: WEBUI_VERSION, latest: WEBUI_VERSION };
 		});
 	};
 </script>
@@ -305,7 +250,7 @@
 <ChangelogModal bind:show={$showChangelog} />
 
 {#if version && compareVersion(version.latest, version.current) && ($settings?.showUpdateToast ?? true)}
-	<div class=" absolute bottom-8 right-8 z-50" in:fade={{ duration: 100 }}>
+	<div class="absolute bottom-8 right-8 z-50" in:fade={{ duration: 100 }}>
 		<UpdateInfoToast
 			{version}
 			on:close={() => {
@@ -319,59 +264,37 @@
 {#if $user}
 	<div class="app relative">
 		<div
-			class=" text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-900 h-screen max-h-[100dvh] overflow-auto flex flex-row justify-end"
+			class="text-gray-700 dark:text-gray-100 bg-white dark:bg-gray-900 h-screen max-h-[100dvh] overflow-auto flex flex-row justify-end"
 		>
 			{#if !['user', 'admin'].includes($user?.role)}
 				<AccountPending />
 			{:else}
 				{#if localDBChats.length > 0}
 					<div class="fixed w-full h-full flex z-50">
-						<div
-							class="absolute w-full h-full backdrop-blur-md bg-white/20 dark:bg-gray-900/50 flex justify-center"
-						>
+						<div class="absolute w-full h-full backdrop-blur-md bg-white/20 dark:bg-gray-900/50 flex justify-center">
 							<div class="m-auto pb-44 flex flex-col justify-center">
 								<div class="max-w-md">
 									<div class="text-center dark:text-white text-2xl font-medium z-50">
 										{$i18n.t('Important Update')}<br />
 										{$i18n.t('Action Required for Chat Log Storage')}
 									</div>
-
 									<div class=" mt-4 text-center text-sm dark:text-gray-200 w-full">
-										{$i18n.t(
-											"Saving chat logs directly to your browser's storage is no longer supported. Please take a moment to download and delete your chat logs by clicking the button below. Don't worry, you can easily re-import your chat logs to the backend through"
-										)}
-										<span class="font-medium dark:text-white"
-											>{$i18n.t('Settings')} > {$i18n.t('Chats')} > {$i18n.t('Import Chats')}</span
-										>. {$i18n.t(
-											'This ensures that your valuable conversations are securely saved to your backend database. Thank you!'
-										)}
+										{$i18n.t("Saving chat logs directly to your browser's storage is no longer supported.")}
 									</div>
-
 									<div class=" mt-6 mx-auto relative group w-fit">
 										<button
 											class="relative z-20 flex px-5 py-2 rounded-full bg-white border border-gray-100 dark:border-none hover:bg-gray-100 transition font-medium text-sm"
 											on:click={async () => {
-												let blob = new Blob([JSON.stringify(localDBChats)], {
-													type: 'application/json'
-												});
+												let blob = new Blob([JSON.stringify(localDBChats)], { type: 'application/json' });
 												saveAs(blob, `chat-export-${Date.now()}.json`);
-
 												const tx = DB.transaction('chats', 'readwrite');
 												await Promise.all([tx.store.clear(), tx.done]);
 												await deleteDB('Chats');
-
 												localDBChats = [];
 											}}
 										>
 											{$i18n.t('Download & Delete')}
 										</button>
-
-										<button
-											class="text-xs text-center w-full mt-2 text-gray-400 underline"
-											on:click={async () => {
-												localDBChats = [];
-											}}>{$i18n.t('Close')}</button
-										>
 									</div>
 								</div>
 							</div>
@@ -385,11 +308,24 @@
 					<slot />
 				{:else}
 					<div
-						class="w-full flex-1 h-full flex items-center justify-center {$showSidebar
-							? '  md:max-w-[calc(100%-var(--sidebar-width))]'
-							: ' '}"
+						class="fixed top-0 left-0 w-full h-full z-[9999] flex items-center justify-center bg-white dark:bg-[#171717]"
+						style="transition: opacity 0.5s ease-out;"
 					>
-						<Spinner className="size-5" />
+						<img
+							crossorigin="anonymous"
+							src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
+							class="animacion-latido block dark:hidden"
+							style="width: 900px !important; max-width: 90vw !important; height: auto !important; object-fit: contain !important;"
+							alt="Cargando GoDoWorks..."
+						/>
+
+						<img
+							crossorigin="anonymous"
+							src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/21f6b24619eb102117ec755e3738f9f452b4661c/Favicon2%20(1).png"
+							class="animacion-latido hidden dark:block"
+							style="width: 900px !important; max-width: 90vw !important; height: auto !important; object-fit: contain !important;"
+							alt="Cargando GoDoWorks..."
+						/>
 					</div>
 				{/if}
 			{/if}
@@ -398,6 +334,18 @@
 {/if}
 
 <style>
+	/* Animación de Latido Suave */
+	@keyframes gentle-breath {
+		0%, 100% { transform: scale(1); opacity: 1; }
+		50% { transform: scale(1.05); opacity: 0.9; }
+	}
+
+	.animacion-latido {
+		animation: gentle-breath 3s ease-in-out infinite;
+		will-change: transform;
+	}
+
+	/* Estilos existentes */
 	.loading {
 		display: inline-block;
 		clip-path: inset(0 1ch 0 0);
@@ -406,16 +354,12 @@
 	}
 
 	@keyframes l {
-		to {
-			clip-path: inset(0 -1ch 0 0);
-		}
+		to { clip-path: inset(0 -1ch 0 0); }
 	}
 
 	pre[class*='language-'] {
 		position: relative;
 		overflow: auto;
-
-		/* make space  */
 		margin: 5px 0;
 		padding: 1.75rem 0 1.75rem 1rem;
 		border-radius: 10px;
@@ -425,11 +369,9 @@
 		position: absolute;
 		top: 5px;
 		right: 5px;
-
 		font-size: 0.9rem;
 		padding: 0.15rem;
 		background-color: #828282;
-
 		border: ridge 1px #7b7b7c;
 		border-radius: 5px;
 		text-shadow: #c4c4c4 0 0 2px;
