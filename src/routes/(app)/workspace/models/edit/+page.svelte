@@ -36,7 +36,19 @@
 	});
 
 	const onSubmit = async (modelInfo) => {
-		const res = await updateModelById(localStorage.token, modelInfo.id, modelInfo);
+		// Agregamos la lógica de fallback para el logo de GoDoWorks aquí también
+		const updatedModelInfo = {
+			...modelInfo,
+			meta: {
+				...modelInfo.meta,
+				profile_image_url:
+					modelInfo.meta.profile_image_url ?? 
+					`https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`
+			}
+		};
+
+		// Usamos updatedModelInfo en lugar del original
+		const res = await updateModelById(localStorage.token, modelInfo.id, updatedModelInfo);
 
 		if (res) {
 			await models.set(
