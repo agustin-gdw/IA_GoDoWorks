@@ -35,7 +35,7 @@
 				meta: {
 					...modelInfo.meta,
 					profile_image_url:
-						modelInfo.meta.profile_image_url ?? `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png`,
+						modelInfo.meta.profile_image_url ?? `https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/7b312d5b7a77e35306d3b560b112cfed0c3a017e/static/static/ChatGPT%20Image%2023%20ene%202026%2C%2021_54_14.png`,
 					suggestion_prompts: modelInfo.meta.suggestion_prompts
 						? modelInfo.meta.suggestion_prompts.filter((prompt) => prompt.content !== '')
 						: null

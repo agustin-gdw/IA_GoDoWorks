@@ -910,12 +910,15 @@
 	});
 </script>
 
+
 <svelte:head>
 	<title>{"GoDoWorks Intelligent Systems"}</title>
-	<link crossorigin="anonymous" rel="icon" href="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png" />
+	<link crossorigin="anonymous" rel="icon" href="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/7b312d5b7a77e35306d3b560b112cfed0c3a017e/static/static/ChatGPT%20Image%2023%20ene%202026%2C%2021_54_14.png" />
+
+
 
 	<meta name="apple-mobile-web-app-title" content={"GoDoWorks Intelligent Systems"} />
-	<meta name="description" content={"GoDoWorks Intelligent Systems"} />
+	<meta name="description" content={"GoDoWorks Intelligent Systems es una distribución diseñada por Agustin A. Sconamiglio en base a Open-WebUI para los sistemas internos de GoDoWorks-."} />
 	<link
 		rel="search"
 		type="application/opensearchdescription+xml"
