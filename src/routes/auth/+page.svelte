@@ -587,9 +587,10 @@
 						<img
 							id="logo"
 							crossorigin="anonymous"
-							src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
-							class=" w-6 rounded-full"
-							alt=""
+						src="https://raw.githubusercontent.com/agustin-gdw/IA_GoDoWorks/cee37eb2835262194239dd473d2f34d9ffa783fa/Favicon1%20(2).png"
+						class="sidebar-new-chat-icon rounded-full object-contain block dark:hidden"
+						style="width: 200px !important; height: auto !important; max-width: none !important; margin-left: 15px !important;"
+						alt=""
 						/>
 					</div>
 				</div>
