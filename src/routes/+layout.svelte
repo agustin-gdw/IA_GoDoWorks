@@ -84,6 +84,12 @@
 
 	setContext('i18n', i18n);
 
+	// Toggle the 'auth-split' body class when on the auth route so the
+	// styles in `src/app.css` are applied automatically for the login page.
+	$: if (typeof document !== 'undefined') {
+		document.body.classList.toggle('auth-split', $page.url.pathname.startsWith('/auth'));
+	}
+
 	const bc = new BroadcastChannel('active-tab-channel');
 
 	let loaded = false;

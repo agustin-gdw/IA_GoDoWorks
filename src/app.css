@@ -33,6 +33,90 @@
 /* --app-text-scale is updated via the UI Scale slider (Interface.svelte) */
 :root {
 	--app-text-scale: 1;
+
+	/* Theming variables for the GoDoWorks login-look */
+	--gw-primary: #0d86a4; /* main teal/blue panel */
+	--gw-primary-dark: #0b6780;
+	--gw-accent: #ffffff;
+	--gw-muted: #eef1f3; /* light diagonal stripes */
+	--gw-card-radius: 12px;
+}
+
+/* ---------------------------------------------
+   Login / auth split layout styles
+   These styles create a left content area and a
+   colored right panel similar to the provided image.
+   Apply when the page contains an element that
+   matches the auth pattern (we toggle the body class
+   from +layout.svelte).
+   --------------------------------------------- */
+.auth-split {
+	position: relative;
+	min-height: 100vh;
+	background: repeating-linear-gradient(45deg, #ffffff 0 120px, #f7f7f7 120px 240px);
+	overflow: hidden;
+}
+
+.auth-split::after {
+	/* Right-side teal panel */
+	content: '';
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100vh;
+	width: min(44vw, 520px);
+	background: linear-gradient(180deg, var(--gw-primary) 0%, var(--gw-primary-dark) 100%);
+	z-index: 0;
+	box-shadow: -10px 0 30px rgba(13, 40, 50, 0.08);
+}
+
+/* Center card for login form */
+.auth-card {
+	z-index: 5; /* above the right panel */
+	background: var(--gw-accent);
+	border-radius: var(--gw-card-radius);
+	padding: 2rem;
+	box-shadow: 0 6px 24px rgba(16, 24, 40, 0.08);
+	max-width: 420px;
+	width: 100%;
+}
+
+/* Round logo that overlaps the split */
+.auth-logo-circle {
+	width: 160px;
+	height: 160px;
+	border-radius: 50%;
+	background: var(--gw-accent);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 10px 30px rgba(9, 28, 38, 0.12);
+	position: relative;
+	z-index: 6;
+	margin: 0 auto 1rem auto;
+}
+
+/* Logo image inside the circle */
+.auth-logo-circle img {
+	width: 68%;
+	height: auto;
+	object-fit: contain;
+}
+
+/* Make the right panel image / text more legible */
+.auth-right-content {
+	position: fixed;
+	right: calc(min(44vw, 520px) / 2);
+	top: 18vh;
+	transform: translateX(50%);
+	color: rgba(255,255,255,0.95);
+	z-index: 6;
+	max-width: 360px;
+}
+
+@media (max-width: 900px) {
+	.auth-split::after { display: none; }
+	.auth-right-content { display: none; }
 }
 
 html {
