@@ -580,7 +580,7 @@
 										<div
 											class={`text-xs mt-1 ${($settings?.highContrastMode ?? false) ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500'}`}
 										>
-											{$i18n.t(`WebUI will make requests to "{{url}}"`, {
+											{$i18n.t(`GDWIS will make requests to "{{url}}"`, {
 												url: path.includes('://')
 													? path
 													: `${url}${path.startsWith('/') ? '' : '/'}${path}`
@@ -832,7 +832,7 @@
 								{$i18n.t('Warning')}:
 							</span>
 							{$i18n.t(
-								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly maintained by the Open WebUI team, making it the more reliable option for compatibility.'
+								'MCP support is experimental and its specification changes often, which can lead to incompatibilities. OpenAPI specification support is directly maintained by the GDWIS team, making it the more reliable option for compatibility.'
 							)}
 
 							<a

@@ -36,87 +36,275 @@
 
 	/* Theming variables for the GoDoWorks login-look */
 	--gw-primary: #0d86a4; /* main teal/blue panel */
-	--gw-primary-dark: #0b6780;
+	--gw-primary-dark: #086d8a;
 	--gw-accent: #ffffff;
-	--gw-muted: #eef1f3; /* light diagonal stripes */
-	--gw-card-radius: 12px;
+	--gw-muted: #f0f4f8;
+	--gw-card-radius: 8px;
+	--gw-input-border: #d0dbe5;
+	--gw-input-bg: #f5f9fc;
+	--gw-text-muted: #7a8a99;
 }
 
 /* ---------------------------------------------
    Login / auth split layout styles
-   These styles create a left content area and a
-   colored right panel similar to the provided image.
-   Apply when the page contains an element that
-   matches the auth pattern (we toggle the body class
-   from +layout.svelte).
    --------------------------------------------- */
 .auth-split {
 	position: relative;
 	min-height: 100vh;
-	background: repeating-linear-gradient(45deg, #ffffff 0 120px, #f7f7f7 120px 240px);
+	background:
+		repeating-linear-gradient(
+			-55deg,
+			#ffffff 0px,
+			#ffffff 80px,
+			#f7f9fb 80px,
+			#f7f9fb 160px
+		);
 	overflow: hidden;
 }
 
 .auth-split::after {
-	/* Right-side teal panel */
 	content: '';
 	position: fixed;
 	top: 0;
 	right: 0;
 	height: 100vh;
-	width: min(44vw, 520px);
+	width: 42vw;
 	background: linear-gradient(180deg, var(--gw-primary) 0%, var(--gw-primary-dark) 100%);
 	z-index: 0;
-	box-shadow: -10px 0 30px rgba(13, 40, 50, 0.08);
+}
+
+@media (max-width: 1024px) {
+	.auth-split::after {
+		display: none;
+	}
+}
+
+/* Left side container for the form card */
+.auth-left {
+	position: relative;
+	z-index: 5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	width: 58vw;
+	padding: 2rem;
+}
+
+@media (max-width: 1024px) {
+	.auth-left {
+		width: 100vw;
+	}
 }
 
 /* Center card for login form */
 .auth-card {
-	z-index: 5; /* above the right panel */
 	background: var(--gw-accent);
 	border-radius: var(--gw-card-radius);
-	padding: 2rem;
-	box-shadow: 0 6px 24px rgba(16, 24, 40, 0.08);
-	max-width: 420px;
+	padding: 2.5rem 2.5rem 2rem 2.5rem;
+	box-shadow: 0 8px 32px rgba(16, 24, 40, 0.10);
+	max-width: 400px;
 	width: 100%;
+}
+
+.auth-card-title {
+	text-align: center;
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 0.15em;
+	color: var(--gw-primary);
+	margin-bottom: 1.5rem;
+	text-transform: uppercase;
+}
+
+/* Input group with icon */
+.auth-input-group {
+	display: flex;
+	align-items: center;
+	border: 1px solid var(--gw-input-border);
+	border-radius: 4px;
+	background: var(--gw-input-bg);
+	margin-bottom: 0.75rem;
+	overflow: hidden;
+}
+
+.auth-input-group:focus-within {
+	border-color: var(--gw-primary);
+	box-shadow: 0 0 0 2px rgba(13, 134, 164, 0.15);
+}
+
+.auth-input-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	min-width: 48px;
+	height: 48px;
+	color: var(--gw-primary);
+	background: transparent;
+}
+
+.auth-input-icon svg {
+	width: 20px;
+	height: 20px;
+}
+
+.auth-input-group input {
+	flex: 1;
+	border: none;
+	background: transparent;
+	padding: 0.85rem 0.75rem 0.85rem 0;
+	font-size: 0.9rem;
+	color: #333;
+	outline: none;
+}
+
+.auth-input-group input::placeholder {
+	color: var(--gw-text-muted);
+	text-transform: uppercase;
+	font-size: 0.8rem;
+	letter-spacing: 0.05em;
+}
+
+/* Primary button */
+.auth-btn-primary {
+	width: 100%;
+	padding: 0.9rem 1rem;
+	background: var(--gw-primary);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 0.85rem;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	cursor: pointer;
+	transition: background 0.2s ease;
+	margin-top: 0.5rem;
+}
+
+.auth-btn-primary:hover {
+	background: var(--gw-primary-dark);
+}
+
+/* Footer links */
+.auth-footer-links {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 1rem;
+	font-size: 0.75rem;
+	color: var(--gw-primary);
+}
+
+.auth-footer-links label {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	cursor: pointer;
+}
+
+.auth-footer-links a {
+	text-decoration: none;
+	color: var(--gw-primary);
+}
+
+.auth-footer-links a:hover {
+	text-decoration: underline;
+}
+
+/* Right panel content */
+.auth-right {
+	position: fixed;
+	top: 0;
+	right: 0;
+	width: 42vw;
+	height: 100vh;
+	z-index: 5;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 2rem;
+	color: #fff;
+}
+
+@media (max-width: 1024px) {
+	.auth-right {
+		display: none;
+	}
 }
 
 /* Round logo that overlaps the split */
 .auth-logo-circle {
-	width: 160px;
-	height: 160px;
+	width: 180px;
+	height: 180px;
 	border-radius: 50%;
 	background: var(--gw-accent);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 10px 30px rgba(9, 28, 38, 0.12);
-	position: relative;
-	z-index: 6;
-	margin: 0 auto 1rem auto;
+	box-shadow: 0 12px 40px rgba(9, 28, 38, 0.18);
+	margin-bottom: 2rem;
 }
 
-/* Logo image inside the circle */
 .auth-logo-circle img {
-	width: 68%;
+	width: 62%;
 	height: auto;
 	object-fit: contain;
 }
 
-/* Make the right panel image / text more legible */
-.auth-right-content {
-	position: fixed;
-	right: calc(min(44vw, 520px) / 2);
-	top: 18vh;
-	transform: translateX(50%);
-	color: rgba(255,255,255,0.95);
-	z-index: 6;
-	max-width: 360px;
+.auth-right h1 {
+	font-size: 2.5rem;
+	font-weight: 300;
+	margin: 0 0 0.5rem 0;
+	color: #fff;
 }
 
-@media (max-width: 900px) {
-	.auth-split::after { display: none; }
-	.auth-right-content { display: none; }
+.auth-right h2 {
+	font-size: 1.1rem;
+	font-weight: 600;
+	margin: 0 0 1rem 0;
+	color: #fff;
+}
+
+.auth-right p {
+	font-size: 0.9rem;
+	line-height: 1.6;
+	text-align: justify;
+	max-width: 340px;
+	opacity: 0.95;
+}
+
+/* Help widget at bottom right */
+.auth-help-widget {
+	position: fixed;
+	bottom: 2rem;
+	right: 2rem;
+	background: #fff;
+	border-radius: 8px;
+	padding: 0.75rem 1.25rem;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	z-index: 10;
+}
+
+.auth-help-widget span.hello {
+	color: #e74c3c;
+	font-weight: 600;
+}
+
+.auth-help-widget span.help-text {
+	color: #999;
+	font-size: 0.85rem;
+}
+
+@media (max-width: 1024px) {
+	.auth-help-widget {
+		display: none;
+	}
 }
 
 html {
